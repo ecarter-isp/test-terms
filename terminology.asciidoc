@@ -49,7 +49,8 @@ show_episode.
 |not authorized
 |The term forbidden is unambiguous about not permitting an action regardless of the subscriber's identity.
 "Even if your account has been authenticated, it probably isn't authorized to delete the entire database."
-See <<terminology.asciidoc#auth,Authentication vs Authorization>> and <<>>.
+See <<terminology.asciidoc#auth,Authentication vs Authorization>>. 
+//and <<>>.
 
 |[[metadata]]metadata
 |
@@ -58,6 +59,7 @@ Do not name or group fields related to pagination as "metadata".
 
 |metadata provider
 |Gracenote
+|
 
 |[[organization]]organization
 |realm
