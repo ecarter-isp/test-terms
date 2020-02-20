@@ -8,15 +8,9 @@ endif::[]
 
 = Recommended Terminology and Usage
 
-The terminology and usage notes on this page are meant to clarify the concepts and tools that make up iStreamPlanet products. This is a living document for use by anyone creating customer-facing content; please add your comments and questions to help enhance its usefulness. 
+The terminology and usage notes on this page are meant to clarify the concepts and tools that make up iStreamPlanet products. These are the views and concepts that we want to consistently communicate to our customers and other stakeholders.
 
-////
-    This file may look like Markdown, but it is actually GitHub Flavored Asciidoc (GFA)
-    (See: https://gist.github.com/dcode/0cfbf2699a1fe9b46ff04c41721dda74)
-    
-    So It's like Markdown^**++**^ !
-////    
-
+This is a living document for use by anyone creating customer-facing content; please add your comments and questions to help enhance its usefulness. 
 
 [cols="1,1,2", options="header"] 
 |===
@@ -27,23 +21,24 @@ The terminology and usage notes on this page are meant to clarify the concepts a
 | | |
 
 |[[account]]account 
-|login
-|Use *account* (subscriber account, admin account, etc.) instead of *login*. +
-
-((What about the person who created the account? App User?  End User? Subscriber?)) +
-A consumer of the iStreamPlanet customer's Service. Think of these as the customer's customers. They are people that pay / subscribe / watch our customer's products and do not know they are using any iStreamPlanet products.
-
-|API
-|
-|Application Programming Interface; a collection of related URI endpoints.
+|login (noun)
+|A consumer of the streaming service provided by an iStreamPlanet customer. These are our customer's customers. They are people that pay / subscribe / watch our customer's products who do not know they are using any iStreamPlanet products.
+//Subscriber account? App User?  End User? Subscriber?
 
 |[[auth]]Authentication vs Authorization
 |
-|Identity (who someone is) vs Permission (what they can do)
+|Authentication is knowing _who someone is_ in the system — identity. + 
+Authorization is knowing _what someone can do_ in the system — permission. +
+See: https://auth0.com/docs/authorization/concepts/authz-and-authn[Auth0 Definition].
 //> "to endorse, empower, justify, or permit by or as if by some recognized or proper authority" 
 //Based on an identity provided through authentication what privileges / rights does that identity have in the system.
 
-See: https://auth0.com/docs/authorization/concepts/authz-and-authn[Auth0 Definition].
+
+|[[artifact]]artifact
+|
+|A group of asset attributes that defines an asset type.  
+Some example artifact types are person, genre, sport, movie, show_season, and 
+show_episode.
 
 
 |[[delete]]delete (contrasts with create)
@@ -56,10 +51,13 @@ See: https://auth0.com/docs/authorization/concepts/authz-and-authn[Auth0 Definit
 "Even if your account has been authenticated, it probably isn't authorized to delete the entire database."
 See <<terminology.asciidoc#auth,Authentication vs Authorization>> and <<>>.
 
-
-|API
+|[[metadata]]metadata
 |
-|Application Programming Interface; a collection of related URI endpoints.
+|Attributes that describe an asset or other system object.
+Do not name or group fields related to pagination as "metadata". 
+
+|metadata provider
+|Gracenote
 
 |[[organization]]organization
 |realm
@@ -111,8 +109,16 @@ and the https://auth0.com/docs/authorization/concepts/authz-and-authn[Auth0 defi
 // therefore, calling it the "Admin Portal" is somewhat misleading.
 |===
 
+// =============================== //
 
 ////
+    This file may look like Markdown, but it is actually GitHub Flavored Asciidoc (GFA)
+    (See: https://gist.github.com/dcode/0cfbf2699a1fe9b46ff04c41721dda74)
+    
+    So It's like Markdown^**++**^ !
+//  
+
+
 
 [NOTE]
 ====
@@ -271,10 +277,7 @@ Should any questions, comments, or concerns arise when reviewing this document p
 
 
 
-[[artifact]]artifact:: 
-    A group of asset attributes that defines an asset type.  
-    Some example types are person, genre, sport, movie, show_season, and 
-    show_episode.
+
 
 [[asset]]asset:: 
     A piece of video content to be streamed and viewed.
@@ -351,8 +354,6 @@ Should any questions, comments, or concerns arise when reviewing this document p
     Anyone (content editors, administrators, etc.) who uses  
     the Web Portal, regardless of any roles or permissions associated with their account.
 
-[[metadata]]metadata::
-    Attributes that describe an asset or other system object.
 
 [[package]]package:: 
     A defined collection of one or more video assets.  
