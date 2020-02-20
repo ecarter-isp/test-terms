@@ -48,7 +48,7 @@ See: https://auth0.com/docs/authorization/concepts/authz-and-authn[Auth0 Definit
 
 |[[delete]]delete (contrasts with create)
 |
-|Use delete only if the object is actually destroyed. Use <<remove>> if the object can be easily restored to a group or list.
+|Use delete only if the object is actually destroyed. Use <<remove,remove>> if the object can be easily restored to a group or list.
 
 |[[forbidden]]forbidden (http code 403)
 |not authorized
