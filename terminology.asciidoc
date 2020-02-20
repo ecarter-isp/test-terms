@@ -8,7 +8,7 @@ endif::[]
 
 = Recommended Terminology and Usage
 
-The terminology and usage notes on this page are meant to clarify the concepts and tools that make up iStreamPlanet products. This is a living document for use by anyone creating customer-facing information; please add your comments and questions to help enhance its usefulness. 
+The terminology and usage notes on this page are meant to clarify the concepts and tools that make up iStreamPlanet products. This is a living document for use by anyone creating customer-facing content; please add your comments and questions to help enhance its usefulness. 
 
 ////
     This file may look like Markdown, but it is actually GitHub Flavored Asciidoc (GFA)
@@ -28,8 +28,10 @@ The terminology and usage notes on this page are meant to clarify the concepts a
 
 |[[account]]account 
 |login
-|Use *account* (subscriber account, admin account, etc.) instead of *login*.
-((What about the person who created the account? App User?  End User? Subscriber?))
+|Use *account* (subscriber account, admin account, etc.) instead of *login*. +
+
+((What about the person who created the account? App User?  End User? Subscriber?)) +
+A consumer of the iStreamPlanet customer's Service. Think of these as the customer's customers. They are people that pay / subscribe / watch our customer's products and do not know they are using any iStreamPlanet products.
 
 |API
 |
@@ -77,7 +79,7 @@ The terminology and usage notes on this page are meant to clarify the concepts a
 _Compare with_ <<terminology.asciidoc#forbidden,forbidden>>. 
 Note: The terms authenticate and authorize were officially muddled from the protocol's origin: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization See also: https://leastprivilege.com/2014/10/02/401-vs-403/
 
-    _See_ <<terminology.asciidoc#region,region>>.
+_See_ <<terminology.asciidoc#region,region>>.
    
 
 
@@ -144,9 +146,7 @@ For example as a user I belong to the Turner NBA organization and the Turner CNN
 
 A consumer of iStreamPlanet [management APIs or services](#management-apis). You may think of a user as an ISP customer. These are the employees and contractors of our customers. For example an employee of Spark who is managing content.
 
-### Account
 
-A consumer of the iStreamPlanet customer's Service. Think of these as the customer's customers. They are people that pay / subscribe / watch our customer's products and do not know they are using any iStreamPlanet products.
 
 ### RBAC
 
