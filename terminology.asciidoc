@@ -48,7 +48,7 @@ show_episode.
 |[[forbidden]]forbidden (http code 403)
 |not authorized
 |The term forbidden is unambiguous about not permitting an action regardless of the subscriber's identity.
-"Even if your account has been authenticated, it probably isn't authorized to delete the entire database."
+"Although your account has been authenticated, it isn't authorized to delete the entire database."
 See <<terminology.asciidoc#auth,Authentication vs Authorization>>. 
 //and <<>>.
 
@@ -63,9 +63,9 @@ Do not name or group fields related to pagination as "metadata".
 
 |[[organization]]organization
 |realm
-|A logical grouping or isolation of resources. +
+|A logical grouping or isolation of resources. 
 A <<terminology.asciidoc#user,user>> may belong to one or more organizations. +
-The core principle is that resources in one organization can only be viewed in the context of that organization.+
+The core principle is that resources in one organization can only be viewed in the context of that organization.
 
 For example as a user I belong to the Turner NBA organization and the Turner CNN organization. In the ISP products I can select the Turner NBA context and view all resources associated to that organization but I must then switch context to the Turner CNN organization to view that set of resources. There is no combined/rolled up view.
 
@@ -78,10 +78,9 @@ Compare with <<delete>>.
 |[[role]]role
 |
 |A defined collection of permissions within the Web Portal. 
- Member accounts can be assigned to one or more roles to simplify 
- management of permissions. 
- //All platform installations contain the following default roles: +
- //_Administrator, ContentEditor, CustomerService, PackageManager, PricingManager,_ and _UserManager_.
+Portal accounts can be assigned to one or more roles to simplify management of permissions. 
+// All platform installations contain the following default roles: 
+// _Administrator, ContentEditor, CustomerService, PackageManager, PricingManager,_ and _UserManager_.
 
 |[[tenant]]tenant
 |client
@@ -90,7 +89,7 @@ Compare with <<delete>>.
 |**unauthorized** (http code 401)
 |not authorized
 |Used when the __identity__ of the object or account cannot be authenticated (validated to be real, true, or genuine). +
-_Compare with_ <<forbidden>> <<terminology.asciidoc#forbidden,forbidden>>. +
+_Compare with_ <<terminology.asciidoc#forbidden,forbidden>>. +
 Note: The terms authenticate and authorize were muddled from 
 the https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization[protocol's origin]. 
 Also see https://leastprivilege.com/2014/10/02/401-vs-403/[401-vs-403]
