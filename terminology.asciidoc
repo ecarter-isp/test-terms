@@ -1,0 +1,417 @@
+ifdef::env-github[]
+:tip-caption:       :bulb:
+:note-caption:      :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption:   :fire:
+:warning-caption:   :warning:
+endif::[]
+
+= Recommended Terminology and Usage
+
+The terminology and usage notes on this page are meant to clarify the concepts and tools that make up iStreamPlanet products. This is a living document for use by anyone creating customer-facing information; please add your comments and questions to help enhance its usefulness. 
+
+////
+    This file may look like Markdown, but it is actually GitHub Flavored Asciidoc (GFA)
+    (See: https://gist.github.com/dcode/0cfbf2699a1fe9b46ff04c41721dda74)
+    
+    So It's like Markdown^**++**^ !
+////    
+
+
+[cols="1,1,2", options="header"] 
+|===
+|Term
+|Avoid
+|Description
+
+| | |
+
+|[[account]]account 
+|login
+|Use *account* (subscriber account, admin account, etc.) instead of *login*.
+((What about the person who created the account? App User?  End User? Subscriber?))
+
+|API
+|
+|Application Programming Interface; a collection of related URI endpoints.
+
+|API
+|
+|Application Programming Interface; a collection of related URI endpoints.
+
+|API
+|
+|Application Programming Interface; a collection of related URI endpoints.
+
+|API
+|
+|Application Programming Interface; a collection of related URI endpoints.
+
+|API
+|
+|Application Programming Interface; a collection of related URI endpoints.
+
+|API
+|
+|Application Programming Interface; a collection of related URI endpoints.
+
+|[[role]]role
+|
+|A defined collection of permissions within the Web Portal. 
+ Member accounts can be assigned to one or more roles to simplify 
+ management of permissions. 
+ //All platform installations contain the following default roles: +
+ //_Administrator, ContentEditor, CustomerService, PackageManager, PricingManager,_ and _UserManager_.
+
+|API
+|
+|Application Programming Interface; a collection of related URI endpoints.
+
+|API
+|
+|Application Programming Interface; a collection of related URI endpoints.
+
+|**unauthorized** (http code 401)
+|not authorized
+|Used when the object or subscriber cannot be authenticated.  
+_Compare with_ <<terminology.asciidoc#forbidden,forbidden>>. 
+Note: The terms authenticate and authorize were officially muddled from the protocol's origin: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization See also: https://leastprivilege.com/2014/10/02/401-vs-403/
+
+    _See_ <<terminology.asciidoc#region,region>>.
+   
+
+
+
+|Web Portal	
+|Orbis Portal, Admin Portal
+|Short name for the "iStreamPlanet Web Portal". Portal users may be viewers, managers, or administrators; therefore, calling it the "Admin Portal" is somewhat misleading.
+|===
+
+
+
+
+[NOTE]
+====
+A sample note admonition.
+We can use gemoji icons in the Asciidoctor markup.
+We assign an icon name to the document
+attributes `tip-caption`, `note-caption` and `important-caption`.
+====
+
+TIP: It works!
+
+IMPORTANT: Asciidoctor is awesome, don't forget!
+
+CAUTION: Don't forget to add the `...-caption` document attributes in the header of the document on GitHub.
+
+WARNING: You have no reason not to use Asciidoctor.
+
+
+
+# 	Recommended Terminology and Usage
+
+This document is to provide guidance and best practices on how a unified iStreamPlanet Authentication & Authorization system should work. The implementation across the suite of  iStreamPlanet products may vary, but they should follow these guidelines and best practices.
+
+**NOTE:** These guidelines and best practices are for how [users](#user) will authenticate and authorize. There should be no changes to how [accounts](#account) authenticate and authorize, for example there will be no changes to the DtC service commonly referred to as OAM. Additionally, this does not cover service to service calls, for example OCM to OGM.
+
+## Terminology
+
+To better understand the guidelines it's important that there is consensus on the terminology used throughout. Bellow is a list of terms and their intended definitions within this document.
+
+### Authentication
+
+TL;DR Who they are.
+
+> "an act, process, or method of showing something (such as an identity, a piece of art, or a financial transaction) to be real, true, or genuine" In the case of this document it is the act of showing and identity is genuine.
+
+cite: [Auth0 Definition](https://auth0.com/docs/authorization/concepts/authz-and-authn)
+
+### Authorization
+
+TL;DR What they can do.
+
+> "to endorse, empower, justify, or permit by or as if by some recognized or proper authority" Based on an identity provided through authentication what privileges / rights does that identity have in the system.
+
+cite: [Auth0 Definition](https://auth0.com/docs/authorization/concepts/authz-and-authn)
+
+### Organization
+
+A logical grouping or isolation of resources. A [user](#user) may belong to one or more organizations. The core principle is that resources in one organization can only be viewed in the context of that organization.
+
+For example as a user I belong to the Turner NBA organization and the Turner CNN organization. In the ISP products I can select the Turner NBA context and view all resources associated to that organization but I must then switch context to the Turner CNN organization to view that set of resources. There is no combined/rolled up view.
+
+### User
+
+A consumer of iStreamPlanet [management APIs or services](#management-apis). You may think of a user as an ISP customer. These are the employees and contractors of our customers. For example an employee of Spark who is managing content.
+
+### Account
+
+A consumer of the iStreamPlanet customer's Service. Think of these as the customer's customers. They are people that pay / subscribe / watch our customer's products and do not know they are using any iStreamPlanet products.
+
+### RBAC
+
+Role Based Access Control. "Role-based access control (RBAC) refers to the idea of assigning permissions to users based on their role within an organization. It provides fine-grained control and offers a simple, manageable approach to access management that is less prone to error than assigning permissions to users individually." see: [Auth0 Documentation](https://auth0.com/docs/authorization/concepts/rbac)
+
+### Management APIs & Services
+
+A grouping of APIs and services that are meant to be used by our customers to manage their organization. These are **NOT** meant to be called or used by [accounts](#account). An example of this would be an API that adds new users to an organization.
+
+## Principals & Guidelines
+
+* A user belongs to one or more organizations.
+* An iStreamPlanet customer (e.g. invoice) may "map"/"own" one or more organizations.
+* Roles are a grouping of permissions. [See: RBAC](#rbac)
+* iStreamPlanet systems should perform authorizations using permissions **not** roles. Roles will be used to assign a user permissions but systems should only validate against permissions. For example, `currentUser.can('create-channel1')` **NOT** `currentUser.isInRole('administrator')`. This will provide greater flexibility and allow for new roles to more easily be added if needed.
+* The amount of roles in the system should be as small as possible.
+* The list of roles and their permission mappings will be defined by iStreamPlanet. The mapping will be the same in each organization. Customers will not be able to modify the mappings or define their own roles.
+* A user will use a single set of credentials to authenticate with iStreamPlanet systems and gain access to all the organizations they are a part of. All customer organizations will exist in the single logical iStreamPlanet production environment, regardless of the purpose (development, testing, production, etc.) the customer has for that organization.
+
+## Client to Service Operation Flow
+
+The client to service operation flow describes how our users and/or management clients interact with our services. All actions in this flow are taken "on behalf" of a user or "in the context" of a user.
+
+**IMPORTANT** This flow should be applied when the action taken is "tied" to a user even if a service is calling another service. In this case the users context would be passed along to the second service.
+
+1. iStreamPlanet will define a set of roles that aligns with customer journeys throughout the iStreamPlanet suite of products. The concept is to provide a middle ground between no access control (e.g. a user can do anything if they belong to the organization) and extremely fine grained access on a resource level (e.g. a user can edit the Seahawks vs 49ers Live event but not the Chiefs vs Charges live event). In the previous examples users would be assigned a role that would allow them to manage all Live Events in an organization rather than specific events.
+2. A user will be invited to one or more organizations and roles for those organizations. This invite process will be manual by an existing user inviting them or they may take place as part of a SSO integration with a customers IDP (Identity Provider) See https://en.wikipedia.org/wiki/Identity_provider.
+3. A user will then perform a sign in operation (authentication) to an organization which will give them a signed [JWT token](https://jwt.io) valid for that organization.
+4. A user may then make requests, either by calling the iStreamPlanet suite of APIs directly or indirectly using the iStreamPlanet management portal, passing the fore mentioned token with the request.
+5. Then iStreamPlanet will validate authentication and perform authorization for the user's request.
+   1. The signature of the request is validated.
+   2. Claims are read from the token.
+   3. Permissions are then validated based on the claims of the token.
+6. The request is then either allowed or rejected based on the above authorization
+
+## Client to Service specifics
+
+* Authentication tokens, and their claims, will use the [JWT](https://jwt.io) standard and should be provided to the iStreamPlanet suite of products using the Authorization header in [Bearer Token](https://oauth.net/2/bearer-tokens/) format.
+* A [Auth0 rule](https://auth0.com/docs/rules) will be used to perform authentication and authorization. This maybe replaced at a later date with the built in [RBAC](#rbac) feature of auth0 but at the time of writing this document, it does not support the level of multi-tenancy needed for iStreamPlanet.
+  * An Auth0 user (e.g. a user) will be annotated, using the `app_metadata` field to denote what role(s) they have in any organization. **NOTE** a wildcard `*` organization name may be used to allow a role to apply to all organizations. The system will refer to this as a Global Role and should only be used for iStreamPlanet employees or contractors.
+  * The rule contains a static list of roles to permissions. This list will be used to generate the complete combined list of permissions to be assigned to the permission claim in the JWT Token.
+  * The rule first validates the [Auth0 Application](https://auth0.com/docs/applications) making the authentication request and then only proceeds if it is in a known list of applications
+  * The requested [token audience](https://auth0.com/docs/glossary#audience) is then used to determine what organization in the `app_metadata` to read the roles list from.
+
+
+## Service to Service Operation Flow
+
+The service to service flow describes how iStreamPlanet services can authenticate and authorize when making calls to other iStreamPlanet Services.
+
+**IMPORTANT** this flow should only be used when there is no user context, if the action performed is on behalf or in the context of a user then please refer to the [client to service operation flow](#client-to-service-operation-flow). An example of a good use of this flow would be a cron job that runs and ingests data from third party services such as Gracenote.
+
+1. An application definition will be created for the new service.
+2. The application will be granted all permissions for all organizations. See the [Service to Service Specific Roles](#Service-to-Service-Specific-Roles) section in Under Consideration for more information.
+3. The service will then make requests to any additional services
+4. iStreamPlanet services will validate authentication and perform authorization for the service's request. **NOTE:** at this point the flow should be the same as the [client to service flow](#client-to-service-operation-flow)
+   1. The signature of the request is validated.
+   2. Claims are read from the token.
+   3. Permissions are then validated based on the claims of the token.
+5. The request is then either allowed or rejected based on the above authorization
+
+## Service to Service specifics
+
+* Application definitions can be created by any Auth0 administrator.
+* Authentication tokens, and their claims, will use the [JWT](https://jwt.io) standard and should be provided to the iStreamPlanet suite of products using the Authorization header in [Bearer Token](https://oauth.net/2/bearer-tokens/) format.
+* A [Auth0 rule](https://auth0.com/docs/rules) will be used to perform authentication and authorization. This maybe replaced at a later date with the built in [RBAC](#rbac) feature of auth0 but at the time of writing this document, it does not support the level of multi-tenancy needed for iStreamPlanet.
+  * An Auth0 application will be annotated, using the Application Metadata feature to denote what role(s) the application has.
+  * The rule contains a static list of roles to permissions. This list will be used to generate the complete combined list of permissions to be assigned to the permission claim in the JWT Token.
+  * The rule first validates the [Auth0 Application](https://auth0.com/docs/applications) making the authentication request and then only proceeds if it is in a known list of applications
+
+## Additional Specifics
+
+* [Auth0](https://manage.auth0.com) will be used as both the IDP and Authorization provider.
+* Each organization will be assigned it's own [API](https://manage.auth0.com/dashboard/us/istreamplanet/apis) in Auth0 and thus will have a unique [token audience](https://auth0.com/docs/glossary#audience).
+* There are two Auth0 tenants [`iStreamPlanet`](https://manage.auth0.com/dashboard/us/istreamplanet/) and [`iStreamPlanet-dev`](https://manage.auth0.com/dashboard/us/istreamplanet-dev). The `iStreamPlanet` tenant should be used for all customer facing environments and the `iStreamPlanet-dev` account should be used for internal iStreamPlanet environments such as development.
+
+
+
+### Can a iStreamPlanet Customer use their own IDP
+
+We are moving in towards the goal of allowing customers to use their own IDP, but currently no. We want to enable allowing a customer to provision/invite users to their organizations via their own IDP (active directory, etc.). There will be some work needed to support this and it will not be support in the first phases of the unification of authentication and authorization.
+
+### Why don't we allow customization of roles
+
+iStreamPlanet has tried to allow customizations of roles previously in the DtC platform (OAM) and it created a system that was more a pit of failure than a pit of success. Customers did not fully understand the permissions required of each of our APIs and they basically guessed at roles they wanted. This lead to a system that did not really work and was difficult to support.
+
+## Under Consideration
+
+### Nested Organizations
+
+Nested organizations would allow for a "roll up" view, in the parent organization, of all isolated resources in child organizations. For example a `Turner` organization that has nested organizations of `CNN` and `NBA`. From that `Turner` organization all resources belong to both `CNN` and `NBA` would be accessible. Currently, there is no real world use case for this from our customers.
+
+### Service to Service Specific Roles
+
+The current status quo is that service to service communication is considered privileged and implicitly granted authorization. In the future there may been the need to limit the scope of authorization for a specific service to mitigate risk. As such, the proposal is to create a set of service specific roles, that can be used to limit permissions granted to a service. A service specific set of permissions would be created as the work flows and scenarios for a service are drastically different.
+
+## Questions or Comments
+
+Should any questions, comments, or concerns arise when reviewing this document please reach out to the team in the #platform-api slack channel and we will be happy to discuss.
+
+
+//
+
+
+
+// Settings
+//:includedir: _includes
+//:sourcedir: ../src/main/java
+
+//:linkattrs:
+:iSP: iStreamPlanet
+:linkcss:
+
+
+// Glossary entries are an example of the AsciiDoc "labeled list" style.
+// If the list consisted of nothing but acronyms and abbreviations, you might consider 
+// using the [horizontal] instead of [glossary] layout.
+// See https://istreamplanet.atlassian.net/wiki/spaces/COM/pages/157155491/Terminology 
+// for other possible terms.
+
+////
+    To reference these entries from other files, use:
+    <<doc-glossary.adoc#term,term-text>> for linking
+    include::{sourcedir}/doc-glossary.adoc[]
+////
+
+
+
+
+[[artifact]]artifact:: 
+    A group of asset attributes that defines an asset type.  
+    Some example types are person, genre, sport, movie, show_season, and 
+    show_episode.
+
+[[asset]]asset:: 
+    A piece of video content to be streamed and viewed.
+
+[[asset_types]]asset types:: 
+    The platform supports the following broad asset product types: 
+    * single purchase (a <<doc-glossary.adoc#VOD,VOD>> show episode or show season)
+    * season package (a finite subscription)
+    * special event (such as the Superbowl)
+    * regular (monthly) subscription (with unlimited billing)
+
+[[attribute]]attribute::
+    A key-value pair that contains extra metadata about an asset.
+
+[[banner]]banner::
+    A carousel "card" that represents and links to a video asset. 
+    Banners may be configured to appear as text links, buttons, images, 
+    or a combination of these elements.
+
+[[billing_plan]]billing plan:: 
+    An entity that has a price and an optional recurrence associated with it. 
+    E.g. $7.99 with monthly billing that expires on 2018-10-31.  
+    The number of occurrences may be unlimited if perpetual until cancelled,  
+    limited for a seasonal subscription, or zero for a one-off purchase. 
+
+[[blackout]]blackout::
+    A temporary restriction on the available viewing area for a program. 
+    For example, subscribers within Brazil might usually have access to all 
+    games on a particular channel. However, if the tenant sets a game to be 
+    "blacked out" within Brasília city limits, then during the blackout period 
+    any subscribers within that city would be unable to watch that game on the tenant's channel.  
+    Blackout regions always override any overlapping "whitelist" regions.  +
+    _Compare with_ <<doc-glossary.adoc#region>>.
+
+[[collection]]collection::    
+    An ordered group of carousel items that represent video assets, 
+    such as channels, events, movies, shows, episodes, and <<doc-glossary.adoc#banner,banners>>.
+
+[[content]]content:: 
+    A file containing the actual content for an asset. 
+    Usually, there will also be a meta-file containing metadata about that 
+    asset, although some data sources (e.g. file systems) merge the content 
+    file and the meta-file into a single file.
+
+[[DRM]]DRM::    
+    Digital Rights Management. Access control technologies for enforcing legal restrictions on  
+    the use of copyrighted works.
+
+[[entitlement]]entitlement:: 
+    Legal and digital permission to access and view a video asset.  
+    Entitlement may be granted when a subscriber joins a streaming service, 
+    subscribes to a package, or purchases a specific video product.
+
+[[EPG]]EPG::
+    https://www.wikiwand.com/en/Electronic_program_guide[Electronic Program Guide]. 
+    Scheduling data which typically describes 
+    schedule and content of one or more Live Linear channels.
+
+[[in-app_purchase]]in-app purchase:: 
+    A purchase made via a mobile app store such as Apple iTunes or Google 
+    Play.
+
+[[item]]item::
+    A specific piece of content that is associated with a video asset, such as  
+    a movie, an episode, or an entire show. This is the basic 
+    unit of content that a subscriber can interact with.
+
+[[layout]]layout::
+    A particular composition of carousel
+    <<doc-glossary.adoc#collections,collections>> on a client <<doc-glossary.adoc#page,page>>. 
+    Layouts are selected dynamically based on the requestor’s location and time window.
+
+[[member]]member::
+    Anyone (content editors, administrators, etc.) who uses  
+    the Web Portal, regardless of any roles or permissions associated with their account.
+
+[[metadata]]metadata::
+    Attributes that describe an asset or other system object.
+
+[[package]]package:: 
+    A defined collection of one or more video assets.  
+    Although it is not required, a package is usually 
+    associated with a <<doc-glossary.adoc#billing_plan,billing plan>>.
+
+[[page]]page::
+    For carousels, a logical container of 
+    <<doc-glossary.adoc#collections,collections>> 
+    requested by a client application.
+
+[[product]]product:: 
+    Within the platform, a <<doc-glossary.adoc#billing_plan,billing plan>> combined with 
+    a <<doc-glossary.adoc#package,package>> that may be associated with one or 
+    more <<doc-glossary.adoc#SKU,SKUs>> for purchase.  
+    Platform tenants may define separate SKUs based on content vendor, language, 
+    geographic area, etc. 
+
+[[region]]region:: 
+    A defined area within which a subscriber may be permitted to view a media asset. 
+    Regions are composed of one or more  geographic locations such as a 
+    countries, provinces or states, cities, and/or postal codes. For example 
+    Delaware, Maryland, and Virginia may form a region while Oregon state plus 
+    Vancouver, Washington may constitute another region. 
+    A video asset *must* be assigned to at least one "whitelist" region to 
+    be available for viewing. +
+    _Compare with_ <<doc-glossary.adoc#blackout,blackout>>.
+
+
+[[subscriber]]subscriber:: 
+    A content consumer of the {iSP} platform. Subscribers are the tenant's customers, "fans" who purchase and view video assets.  
+
+[[subscription]]subscription:: 
+    Access to video content based on recurring payments over time.  
+    A subscription may be _finite_ for a season package, or _unlimited_ for a 
+    currently on-going series. The shortest possible duration is 24 hours.
+
+[[tenant]]tenant:: 
+    A contracted content provider, owner, or distributor that employs the 
+    platform API to build customized video streaming applications for subscribers.
+
+[[whitelist_region]]whitelist region:: 
+    One or more areas within which content may be viewed. 
+    A video asset *must* be assigned to at least one "whitelist" region to 
+    be available for viewing.  
+    _See_ <<doc-glossary.adoc#region,region>>.
+    _Compare with_ <<doc-glossary.adoc#blackout,blackout>>.
+
+
+////
+
+    funstuff
+    
+    // it's raining :cat:s and :dog:s!
+
+    // :toc:
+
+////
