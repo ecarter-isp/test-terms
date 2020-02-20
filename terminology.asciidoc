@@ -37,13 +37,19 @@ A consumer of the iStreamPlanet customer's Service. Think of these as the custom
 |
 |Application Programming Interface; a collection of related URI endpoints.
 
-|API
+|[[auth]]Authentication vs Authorization
 |
-|Application Programming Interface; a collection of related URI endpoints.
+|Identity (who someone is) vs Permission (what they can do)
 
-|API
-|
-|Application Programming Interface; a collection of related URI endpoints.
+> "to endorse, empower, justify, or permit by or as if by some recognized or proper authority" Based on an identity provided through authentication what privileges / rights does that identity have in the system.
+
+See: https://auth0.com/docs/authorization/concepts/authz-and-authn[Auth0 Definition].
+
+|[[forbidden]]forbidden (http code 403)
+|not authorized
+|The term forbidden is unambiguous about not permitting an action regardless of the subscriber's identity.
+"Even if your account has been authenticated, it probably isn't authorized to delete the entire database."
+See <<auth,Authentication vs Authorization>> and <<>>.
 
 |API
 |
@@ -75,14 +81,13 @@ A consumer of the iStreamPlanet customer's Service. Think of these as the custom
 
 |**unauthorized** (http code 401)
 |not authorized
-|Used when the object or subscriber cannot be authenticated.  
-_Compare with_ <<terminology.asciidoc#forbidden,forbidden>>. 
-Note: The terms authenticate and authorize were officially muddled from the protocol's origin: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization See also: https://leastprivilege.com/2014/10/02/401-vs-403/
-
-_See_ <<terminology.asciidoc#region,region>>.
-   
-
-
+|Used when the __identity__ of the object or account cannot be authenticated (validated to be real, true, or genuine). +
+_Compare with_ <<forbidden>> <<terminology.asciidoc#forbidden,forbidden>>. +
+Note: The terms authenticate and authorize were muddled from 
+the https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization[protocol's origin]. 
+Also see https://leastprivilege.com/2014/10/02/401-vs-403/[401-vs-403]
+and the https://auth0.com/docs/authorization/concepts/authz-and-authn[Auth0 definition].
+// Authentication
 
 |Web Portal	
 |Orbis Portal, Admin Portal
@@ -120,21 +125,9 @@ This document is to provide guidance and best practices on how a unified iStream
 
 To better understand the guidelines it's important that there is consensus on the terminology used throughout. Bellow is a list of terms and their intended definitions within this document.
 
-### Authentication
 
-TL;DR Who they are.
 
-> "an act, process, or method of showing something (such as an identity, a piece of art, or a financial transaction) to be real, true, or genuine" In the case of this document it is the act of showing and identity is genuine.
 
-cite: [Auth0 Definition](https://auth0.com/docs/authorization/concepts/authz-and-authn)
-
-### Authorization
-
-TL;DR What they can do.
-
-> "to endorse, empower, justify, or permit by or as if by some recognized or proper authority" Based on an identity provided through authentication what privileges / rights does that identity have in the system.
-
-cite: [Auth0 Definition](https://auth0.com/docs/authorization/concepts/authz-and-authn)
 
 ### Organization
 
