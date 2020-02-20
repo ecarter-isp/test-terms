@@ -40,10 +40,15 @@ A consumer of the iStreamPlanet customer's Service. Think of these as the custom
 |[[auth]]Authentication vs Authorization
 |
 |Identity (who someone is) vs Permission (what they can do)
-
-> "to endorse, empower, justify, or permit by or as if by some recognized or proper authority" Based on an identity provided through authentication what privileges / rights does that identity have in the system.
+//> "to endorse, empower, justify, or permit by or as if by some recognized or proper authority" 
+//Based on an identity provided through authentication what privileges / rights does that identity have in the system.
 
 See: https://auth0.com/docs/authorization/concepts/authz-and-authn[Auth0 Definition].
+
+
+|[[delete]]delete (contrasts with create)
+|
+|Use delete only if the object is actually destroyed. Use <<remove>> if the object can be easily restored to a group or list.
 
 |[[forbidden]]forbidden (http code 403)
 |not authorized
@@ -51,16 +56,13 @@ See: https://auth0.com/docs/authorization/concepts/authz-and-authn[Auth0 Definit
 "Even if your account has been authenticated, it probably isn't authorized to delete the entire database."
 See <<terminology.asciidoc#auth,Authentication vs Authorization>> and <<>>.
 
-|API
-|
-|Application Programming Interface; a collection of related URI endpoints.
 
 |API
 |
 |Application Programming Interface; a collection of related URI endpoints.
 
-|[[organization]]Organization
-|
+|[[organization]]organization
+|realm
 |A logical grouping or isolation of resources. +
 A <<terminology.asciidoc#user,user>> may belong to one or more organizations. +
 The core principle is that resources in one organization can only be viewed in the context of that organization.+
@@ -71,6 +73,7 @@ For example as a user I belong to the Turner NBA organization and the Turner CNN
 |[[remove]]remove (contrasts with add)
 |delete
 |Use remove if the object is being excluded from a group, list, or page, but it still exists.
+Compare with <<delete>>.
 
 |[[role]]role
 |
@@ -109,7 +112,7 @@ and the https://auth0.com/docs/authorization/concepts/authz-and-authn[Auth0 defi
 |===
 
 
-
+////
 
 [NOTE]
 ====
@@ -138,11 +141,6 @@ This document is to provide guidance and best practices on how a unified iStream
 ## Terminology
 
 To better understand the guidelines it's important that there is consensus on the terminology used throughout. Bellow is a list of terms and their intended definitions within this document.
-
-
-
-
-
 
 
 
@@ -245,7 +243,7 @@ The current status quo is that service to service communication is considered pr
 Should any questions, comments, or concerns arise when reviewing this document please reach out to the team in the #platform-api slack channel and we will be happy to discuss.
 
 
-//
+////
 
 
 
