@@ -49,7 +49,7 @@ See: https://auth0.com/docs/authorization/concepts/authz-and-authn[Auth0 Definit
 |not authorized
 |The term forbidden is unambiguous about not permitting an action regardless of the subscriber's identity.
 "Even if your account has been authenticated, it probably isn't authorized to delete the entire database."
-See <<auth,Authentication vs Authorization>> and <<>>.
+See <<terminology.asciidoc#auth,Authentication vs Authorization>> and <<>>.
 
 |API
 |
@@ -59,9 +59,18 @@ See <<auth,Authentication vs Authorization>> and <<>>.
 |
 |Application Programming Interface; a collection of related URI endpoints.
 
-|API
+|[[organization]]Organization
 |
-|Application Programming Interface; a collection of related URI endpoints.
+|A logical grouping or isolation of resources. +
+A <<terminology.asciidoc#user,user>> may belong to one or more organizations. +
+The core principle is that resources in one organization can only be viewed in the context of that organization.+
+
+For example as a user I belong to the Turner NBA organization and the Turner CNN organization. In the ISP products I can select the Turner NBA context and view all resources associated to that organization but I must then switch context to the Turner CNN organization to view that set of resources. There is no combined/rolled up view.
+
+
+|[[remove]]remove (contrasts with add)
+|delete
+|Use remove if the object is being excluded from a group, list, or page, but it still exists.
 
 |[[role]]role
 |
@@ -71,13 +80,9 @@ See <<auth,Authentication vs Authorization>> and <<>>.
  //All platform installations contain the following default roles: +
  //_Administrator, ContentEditor, CustomerService, PackageManager, PricingManager,_ and _UserManager_.
 
-|API
-|
-|Application Programming Interface; a collection of related URI endpoints.
-
-|API
-|
-|Application Programming Interface; a collection of related URI endpoints.
+|[[tenant]]tenant
+|client
+|An iSP customer that controls an instance of the Portal.  
 
 |**unauthorized** (http code 401)
 |not authorized
@@ -89,9 +94,18 @@ Also see https://leastprivilege.com/2014/10/02/401-vs-403/[401-vs-403]
 and the https://auth0.com/docs/authorization/concepts/authz-and-authn[Auth0 definition].
 // Authentication
 
-|Web Portal	
+|[[user]]user
+|
+|The employees and contractors of iSP customers who use our APIs, and Web Portal and other services.
+//Use subscriber to refer to content viewers (these are our clients' customers = "the fans").
+//Some installations may have multiple "tiers" of subscribers.
+//A consumer of iStreamPlanet [management APIs or services](#management-apis). 
+//such as admins, content curators, etc.) Users may belong to one or more roles
+
+|[[portal]]Web Portal	
 |Orbis Portal, Admin Portal
-|Short name for the "iStreamPlanet Web Portal". Portal users may be viewers, managers, or administrators; therefore, calling it the "Admin Portal" is somewhat misleading.
+|Short name for the "iStreamPlanet Web Portal". Portal users may be viewers, managers, or administrators.
+// therefore, calling it the "Admin Portal" is somewhat misleading.
 |===
 
 
@@ -129,15 +143,6 @@ To better understand the guidelines it's important that there is consensus on th
 
 
 
-### Organization
-
-A logical grouping or isolation of resources. A [user](#user) may belong to one or more organizations. The core principle is that resources in one organization can only be viewed in the context of that organization.
-
-For example as a user I belong to the Turner NBA organization and the Turner CNN organization. In the ISP products I can select the Turner NBA context and view all resources associated to that organization but I must then switch context to the Turner CNN organization to view that set of resources. There is no combined/rolled up view.
-
-### User
-
-A consumer of iStreamPlanet [management APIs or services](#management-apis). You may think of a user as an ISP customer. These are the employees and contractors of our customers. For example an employee of Spark who is managing content.
 
 
 
