@@ -1,2 +1,2 @@
 # test-terms
-Just sandbox for testing some formatting ideas
+Just a sandbox for testing some formatting ideas...
